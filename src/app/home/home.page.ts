@@ -12,6 +12,7 @@ import {
 export class HomePage {
   encodeData: any;
   scannedData: {};
+  barcode: string;
   barcodeScannerOptions: BarcodeScannerOptions;
  
   constructor(private barcodeScanner: BarcodeScanner) {
@@ -23,16 +24,13 @@ export class HomePage {
     };
   }
  
-  scanCode() {
-    this.barcodeScanner
-      .scan()
-      .then(barcodeData => {
-        alert("Barcode data " + JSON.stringify(barcodeData));
-        this.scannedData = barcodeData;
-      })
-      .catch(err => {
-        console.log("Error", err);
-      });
+  async scanCode() {
+    this.barcodeScanner.scan().then(barcodeData => {
+      this.scannedData = barcodeData
+      this.barcode = barcodeData.text
+    }).catch(err => {
+       console.log(err);
+    });
   }
  
   encodedText() {
